@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Server Information | Hawaii State Roleplay</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="animated-bg"></div>
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="/index.html" class="logo-area-link">
+          <div class="logo-area">
+            <img
+              src="https://www.image2url.com/r2/default/images/1780193311385-e0aa4b69-41cf-460f-bb58-9f60ad97b61d.png"
+              alt="Hawaii State Roleplay Logo"
+              class="server-icon"
+            />
+            <span class="brand-name"
+              >Hawaii State <span class="highlight">RP</span></span
+            >
+          </div>
+        </a>
+        <ul class="nav-links">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/server-rules.html">Server Rules</a></li>
+          <li><a href="/information.html" class="active">Information</a></li>
+          <li>
+            <a
+              href="https://discord.gg/xZEXJYRSRx"
+              target="_blank"
+              class="nav-discord-btn"
+              ><i class="fab fa-discord"></i> Discord</a
+            >
+          </li>
+        </ul>
+        <div class="menu-toggle" id="mobile-menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <main class="info-page-container">
+      <div class="info-header fade-in">
+        <h1 class="blue-text">Server Information</h1>
+        <p>Learn more about our community, departments, and operations</p>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-main-card fade-in delay-1">
+          <h2>About Our Community</h2>
+          <p>
+            Hawaii State Roleplay offers a small, loyal community that provides
+            quality roleplays. Inspired by Honolulu in Hawaii, Hawaii State
+            Roleplay provides a quality experience from keeping streets clean of
+            criminals to putting out fires to selling stolen cars.
+          </p>
+          <p>
+            Hawaii State Roleplay is a very small but powerful upcoming roleplay
+            community. We dedicate ourselves to creating realistic environments
+            and fair scenarios for every single member.
+          </p>
+
+          <div class="info-join-footer">
+            <span>Ready to make your mark in paradise?</span>
+            <a
+              href="https://discord.gg/3sUJDVyM"
+              target="_blank"
+              class="btn btn-primary"
+              >Join Today</a
+            >
+          </div>
+        </div>
+
+        <div class="info-sidebar">
+          <div class="meta-card fade-in delay-2">
+            <h3>Server Details</h3>
+            <div class="meta-item">
+              <span class="meta-label">Owner</span>
+              <span class="meta-value">Hello_3eridne55</span>
+            </div>
+
+            <div class="meta-item-code">
+              <span class="meta-label">Server Code</span>
+              <div class="inline-code-box">
+                <span id="serverJoinCode">hawasrp</span>
+                <button id="copyCodeBtn" title="Copy Code">
+                  <i class="far fa-copy"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="meta-item">
+              <span class="meta-label">Discord Server</span>
+              <span class="meta-value"
+                ><a
+                  href="https://discord.gg/3sUJDVyM"
+                  target="_blank"
+                  class="sidebar-link"
+                  >Open Invite Link</a
+                ></span
+              >
+            </div>
+          </div>
+
+          <div class="meta-card fade-in delay-3">
+            <h3>What We Provide</h3>
+            <ul class="features-list">
+              <li>Dedicated Staff Team</li>
+              <li>Realistic Police Department</li>
+              <li>Active Fire Department</li>
+              <li>Frequent Roleplay Sessions</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Hawaii State Roleplay.</p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Mobile Menu Controller
+        const mobileMenu = document.getElementById("mobile-menu");
+        const navLinks = document.querySelector(".nav-links");
+
+        mobileMenu.addEventListener("click", () => {
+          navLinks.classList.toggle("active");
+          mobileMenu.classList.toggle("is-active");
+
+          const bars = mobileMenu.querySelectorAll(".bar");
+          bars[0].style.transform = mobileMenu.classList.contains("is-active")
+            ? "rotate(-45deg) translate(-5px, 6px)"
+            : "none";
+          bars[1].style.opacity = mobileMenu.classList.contains("is-active")
+            ? "0"
+            : "1";
+          bars[2].style.transform = mobileMenu.classList.contains("is-active")
+            ? "rotate(45deg) translate(-5px, -6px)"
+            : "none";
+        });
+
+        // Clipboard Copy Integration
+        const copyBtn = document.getElementById("copyCodeBtn");
+        const codeText = document.getElementById("serverJoinCode").innerText;
+
+        copyBtn.addEventListener("click", () => {
+          navigator.clipboard.writeText(codeText).then(() => {
+            copyBtn.innerHTML = `<i class="fas fa-check"></i>`;
+            copyBtn.style.background = "#10b981";
+            copyBtn.style.color = "#fff";
+
+            setTimeout(() => {
+              copyBtn.innerHTML = `<i class="far fa-copy"></i>`;
+              copyBtn.style.background = "rgba(255,255,255,0.05)";
+              copyBtn.style.color = "var(--text-main)";
+            }, 2000);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
