@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Application | Hawaii State Roleplay</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="animated-bg"></div>
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="/index.html" class="logo-area-link">
+          <div class="logo-area">
+            <img
+              src="https://www.image2url.com/r2/default/images/1780193311385-e0aa4b69-41cf-460f-bb58-9f60ad97b61d.png"
+              alt="Hawaii State Roleplay Logo"
+              class="server-icon"
+            />
+            <span class="brand-name"
+              >Hawaii State <span class="highlight">RP</span></span
+            >
+          </div>
+        </a>
+        <ul class="nav-links">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/server-rules.html">Server Rules</a></li>
+          <li><a href="/information.html">Information</a></li>
+          <li>
+            <a
+              href="https://discord.gg/xZEXJYRSRx"
+              target="_blank"
+              class="nav-discord-btn"
+              ><i class="fab fa-discord"></i> Discord</a
+            >
+          </li>
+        </ul>
+        <div class="menu-toggle" id="mobile-menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <main class="app-page-container">
+      <div class="app-header fade-in">
+        <h1 class="blue-text">Staff Applications</h1>
+        <p>
+          Join the team behind the paradise and help manage our growing
+          community.
+        </p>
+      </div>
+
+      <div class="app-card fade-in delay-1">
+        <div id="stage-loader" class="hidden">
+          <div class="loading-spinner"></div>
+          <p id="loader-text">Loading next section...</p>
+        </div>
+
+        <div id="welcome-view" class="form-step active">
+          <h2>Why Join the Staff Team?</h2>
+          <p>
+            Being part of the Hawaii State Roleplay staff team means ensuring
+            our community remains a safe, fair, and highly immersive environment
+            for everyone. We look for mature, active individuals who can handle
+            rule infractions calmly, host engaging sessions, and assist players
+            professionally.
+          </p>
+
+          <div class="app-requirements">
+            <h3>Application Requirements:</h3>
+            <ul>
+              <li>Must be a member of our Discord server.</li>
+              <li>
+                Must have a clear understanding of all Server and In-Game rules.
+              </li>
+              <li>Must provide accurate account identifiers.</li>
+              <li class="warning-rule">
+                The use of AI (ChatGPT, Claude, etc.) to write application
+                responses is strictly prohibited. Detection will result in an
+                immediate blacklist.
+              </li>
+            </ul>
+          </div>
+
+          <div class="agreement-zone">
+            <label class="checkbox-container">
+              <input type="checkbox" id="rules-agree-checkbox" />
+              <span class="checkmark"></span>
+              I agree to all requirements and certify that I will not use AI
+              assistance.
+            </label>
+          </div>
+
+          <div class="auth-action-zone">
+            <button id="btn-begin-app" class="btn btn-primary" disabled>
+              Begin Staff Application
+            </button>
+          </div>
+        </div>
+
+        <form id="application-form" onsubmit="return false;" novalidate>
+          <div id="step-1-view" class="form-step hidden">
+            <div class="step-progress">Step 1 of 6: Account Information</div>
+
+            <div class="input-group">
+              <label for="discord-username">Discord Username</label>
+              <input
+                type="text"
+                id="discord-username"
+                placeholder="e.g., hello_3eridne55"
+              />
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label for="discord-id">Discord User ID</label>
+              <input
+                type="text"
+                id="discord-id"
+                placeholder="e.g., 1504636615031525447"
+                inputmode="numeric"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+              />
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label for="roblox-username">Roblox Username</label>
+              <input
+                type="text"
+                id="roblox-username"
+                placeholder="e.g., Builderman"
+              />
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label for="roblox-id">Roblox User ID</label>
+              <input
+                type="text"
+                id="roblox-id"
+                placeholder="e.g., 156"
+                inputmode="numeric"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+              />
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label for="app-age">Age</label>
+              <input
+                type="text"
+                id="app-age"
+                placeholder="e.g., 16"
+                inputmode="numeric"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+              />
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label for="app-timezone">Time Zone</label>
+              <input
+                type="text"
+                id="app-timezone"
+                placeholder="e.g., EST / GMT-5"
+              />
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="form-navigation">
+              <button
+                type="button"
+                class="btn btn-secondary btn-back-to-welcome"
+              >
+                Back
+              </button>
+              <button type="button" id="btn-to-step-2" class="btn btn-primary">
+                Next
+              </button>
+            </div>
+          </div>
+
+          <div id="step-2-view" class="form-step hidden">
+            <div class="step-progress">Step 2 of 6: Experience</div>
+
+            <div class="input-group">
+              <label for="exp-reason"
+                >Why do you want to join our staff team?</label
+              >
+              <textarea
+                id="exp-reason"
+                rows="4"
+                placeholder="Type response..."
+              ></textarea>
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label for="exp-comparison"
+                >Why should we pick you over other applicants?</label
+              >
+              <textarea
+                id="exp-comparison"
+                rows="4"
+                placeholder="Type response..."
+              ></textarea>
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label>How active will you be in our server?</label>
+              <div class="slider-container">
+                <div class="slider-wrapper">
+                  <input
+                    type="range"
+                    id="activity-slider"
+                    min="1"
+                    max="10"
+                    value="5"
+                  />
+                  <div class="slider-badge">
+                    <span id="slider-output">5</span>
+                  </div>
+                </div>
+                <div class="slider-hints">
+                  <span>1 - Least Active</span>
+                  <span>10 - Most Active</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-navigation">
+              <button
+                type="button"
+                id="btn-back-to-1"
+                class="btn btn-secondary"
+              >
+                Back
+              </button>
+              <button type="button" id="btn-to-step-3" class="btn btn-primary">
+                Next
+              </button>
+            </div>
+          </div>
+
+          <div id="step-3-view" class="form-step hidden">
+            <div class="step-progress">Step 3 of 6: Basic Knowledge</div>
+
+            <div class="input-group">
+              <label for="know-frp"
+                >What is FRP and how would you punish a player for it?</label
+              >
+              <textarea
+                id="know-frp"
+                rows="3"
+                placeholder="Type response..."
+              ></textarea>
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label for="know-vdm"
+                >What is VDM and how would you punish a player for it?</label
+              >
+              <textarea
+                id="know-vdm"
+                rows="3"
+                placeholder="Type response..."
+              ></textarea>
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label for="know-rdm"
+                >What is RDM and how would you punish a player for it?</label
+              >
+              <textarea
+                id="know-rdm"
+                rows="3"
+                placeholder="Type response..."
+              ></textarea>
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label for="know-ltap"
+                >What is LTAP and how would you punish a player for it?</label
+              >
+              <textarea
+                id="know-ltap"
+                rows="3"
+                placeholder="Type response..."
+              ></textarea>
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label for="know-rtap"
+                >What is RTAP and how would you punish a player for it?</label
+              >
+              <textarea
+                id="know-rtap"
+                rows="3"
+                placeholder="Type response..."
+              ></textarea>
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label for="know-nlr"
+                >What is NLR and how would you punish a player for it?</label
+              >
+              <textarea
+                id="know-nlr"
+                rows="3"
+                placeholder="Type response..."
+              ></textarea>
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="form-navigation">
+              <button
+                type="button"
+                id="btn-back-to-2"
+                class="btn btn-secondary"
+              >
+                Back
+              </button>
+              <button type="button" id="btn-to-step-4" class="btn btn-primary">
+                Next
+              </button>
+            </div>
+          </div>
+
+          <div id="step-4-view" class="form-step hidden">
+            <div class="step-progress">Step 4 of 6: Scenarios</div>
+
+            <div class="input-group">
+              <label for="scen-no-evidence"
+                >If someone calls mod without any evidence, how would you handle
+                it?</label
+              >
+              <textarea
+                id="scen-no-evidence"
+                rows="3"
+                placeholder="Type response..."
+              ></textarea>
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label for="scen-abuse"
+                >You witness another staff member abusing their powers. What
+                would you do?</label
+              >
+              <textarea
+                id="scen-abuse"
+                rows="3"
+                placeholder="Type response..."
+              ></textarea>
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label for="scen-stacking"
+                >Mod calls are stacking and you're the only one online, what
+                would you do?</label
+              >
+              <textarea
+                id="scen-stacking"
+                rows="3"
+                placeholder="Type response..."
+              ></textarea>
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="input-group">
+              <label for="scen-impersonator"
+                >You see a player impersonating staff, what would you do?</label
+              >
+              <textarea
+                id="scen-impersonator"
+                rows="3"
+                placeholder="Type response..."
+              ></textarea>
+              <span class="error-msg">Required Question</span>
+            </div>
+
+            <div class="form-navigation">
+              <button
+                type="button"
+                id="btn-back-to-3"
+                class="btn btn-secondary"
+              >
+                Back
+              </button>
+              <button type="button" id="btn-to-step-5" class="btn btn-primary">
+                Next
+              </button>
+            </div>
+          </div>
+
+          <div id="step-5-view" class="form-step hidden">
+            <div class="step-progress">Step 5 of 6: Multiple Choice</div>
+
+            <div class="input-group mc-group">
+              <label>Can moderators use custom ":h" messages?</label>
+              <div class="radio-options-grid">
+                <label class="radio-card"
+                  ><input type="radio" name="mc-hmsg" value="Yes" /><span
+                    >Yes</span
+                  ></label
+                >
+                <label class="radio-card"
+                  ><input type="radio" name="mc-hmsg" value="No" /><span
+                    >No</span
+                  ></label
+                >
+              </div>
+              <span class="error-msg-mc">Please select an option</span>
+            </div>
+
+            <div class="input-group mc-group">
+              <label
+                >What command(s) should you never use in game at all?</label
+              >
+              <div
+                id="shuffled-commands-box"
+                class="radio-options-grid stack-grid"
+              ></div>
+              <span class="error-msg-mc"
+                >Please select at least one choice</span
+              >
+            </div>
+
+            <div class="input-group mc-group">
+              <label>Can you use ":pm" while off-duty as a moderator?</label>
+              <div class="radio-options-grid">
+                <label class="radio-card"
+                  ><input type="radio" name="mc-pm-offduty" value="Yes" /><span
+                    >Yes</span
+                  ></label
+                >
+                <label class="radio-card"
+                  ><input type="radio" name="mc-pm-offduty" value="No" /><span
+                    >No</span
+                  ></label
+                >
+              </div>
+              <span class="error-msg-mc">Please select an option</span>
+            </div>
+
+            <div class="input-group mc-group">
+              <label
+                >Can you get on shift while the player count is under 20
+                players?</label
+              >
+              <div class="radio-options-grid">
+                <label class="radio-card"
+                  ><input type="radio" name="mc-playercount" value="Yes" /><span
+                    >Yes</span
+                  ></label
+                >
+                <label class="radio-card"
+                  ><input type="radio" name="mc-playercount" value="No" /><span
+                    >No</span
+                  ></label
+                >
+              </div>
+              <span class="error-msg-mc">Please select an option</span>
+            </div>
+
+            <div class="form-navigation">
+              <button
+                type="button"
+                id="btn-back-to-4"
+                class="btn btn-secondary"
+              >
+                Back
+              </button>
+              <button type="button" id="btn-to-step-6" class="btn btn-primary">
+                Next
+              </button>
+            </div>
+          </div>
+
+          <div id="step-6-view" class="form-step hidden">
+            <div class="step-progress">Step 6 of 6: Understanding</div>
+
+            <div class="input-group mc-group">
+              <label
+                >Do you understand that you may be denied for any reason whatso
+                ever?</label
+              >
+              <div class="radio-options-grid">
+                <label class="radio-card"
+                  ><input type="radio" name="und-deny" value="Yes" /><span
+                    >Yes</span
+                  ></label
+                >
+                <label class="radio-card"
+                  ><input type="radio" name="und-deny" value="No" /><span
+                    >No</span
+                  ></label
+                >
+              </div>
+              <span class="error-msg-mc">Please select an option</span>
+            </div>
+
+            <div class="input-group mc-group">
+              <label
+                >Do you understand that the use of AI at all will result in
+                immediate denial and permanent blacklist?</label
+              >
+              <div class="radio-options-grid">
+                <label class="radio-card"
+                  ><input type="radio" name="und-ai" value="Yes" /><span
+                    >Yes</span
+                  ></label
+                >
+                <label class="radio-card"
+                  ><input type="radio" name="und-ai" value="No" /><span
+                    >No</span
+                  ></label
+                >
+              </div>
+              <span class="error-msg-mc">Please select an option</span>
+            </div>
+
+            <div class="input-group">
+              <label for="und-questions"
+                >Any questions? <span class="opt-label">(Optional)</span></label
+              >
+              <textarea
+                id="und-questions"
+                rows="3"
+                placeholder="Type your questions here... (Or leave blank)"
+              ></textarea>
+            </div>
+
+            <div class="form-navigation">
+              <button
+                type="button"
+                id="btn-back-to-5"
+                class="btn btn-secondary"
+              >
+                Back
+              </button>
+              <button
+                type="submit"
+                id="btn-submit-final"
+                class="btn btn-primary"
+              >
+                Submit Application
+              </button>
+            </div>
+          </div>
+
+          <div id="success-view" class="form-step hidden">
+            <div class="success-icon-zone">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Application Submitted Successfully</h2>
+            <p>
+              Your data logs have been queued for processing. The management
+              team will review your application fields shortly. Check your
+              Discord status for direct updates.
+            </p>
+            <div class="form-navigation" style="justify-content: center">
+              <a href="/index.html" class="btn btn-secondary">Return to Home</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Hawaii State Roleplay.</p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const mobileMenu = document.getElementById("mobile-menu");
+        const navLinks = document.querySelector(".nav-links");
+
+        mobileMenu.addEventListener("click", () => {
+          navLinks.classList.toggle("active");
+          mobileMenu.classList.toggle("is-active");
+        });
+
+        // Slider Display Controller
+        const slider = document.getElementById("activity-slider");
+        const sliderOutput = document.getElementById("slider-output");
+        slider.addEventListener("input", () => {
+          sliderOutput.innerText = slider.value;
+        });
+
+        // Application Views
+        const loader = document.getElementById("stage-loader");
+        const welcomeView = document.getElementById("welcome-view");
+        const step1View = document.getElementById("step-1-view");
+        const step2View = document.getElementById("step-2-view");
+        const step3View = document.getElementById("step-3-view");
+        const step4View = document.getElementById("step-4-view");
+        const step5View = document.getElementById("step-5-view");
+        const step6View = document.getElementById("step-6-view");
+        const successView = document.getElementById("success-view");
+
+        // Form Agreement Button Controller
+        const agreeCheckbox = document.getElementById("rules-agree-checkbox");
+        const beginBtn = document.getElementById("btn-begin-app");
+        agreeCheckbox.addEventListener("change", () => {
+          beginBtn.disabled = !agreeCheckbox.checked;
+        });
+
+        // Shuffle Commands Setup
+        const commandsBox = document.getElementById("shuffled-commands-box");
+        const targetCommands = [
+          ":weather",
+          ":heal others",
+          ":bring all",
+          ":kick",
+          ":ban",
+        ];
+        const shuffledArray = [...targetCommands];
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffledArray[i], shuffledArray[j]] = [
+            shuffledArray[j],
+            shuffledArray[i],
+          ];
+        }
+
+        shuffledArray.forEach((cmd) => {
+          const lbl = document.createElement("label");
+          lbl.className = "radio-card check-card";
+          lbl.innerHTML = `<input type="checkbox" name="mc-neveruse" value="${cmd}"><span>${cmd}</span>`;
+          commandsBox.appendChild(lbl);
+        });
+
+        // Smooth Multi-Stage Animation Transition Engine
+        function changeStage(
+          currentStage,
+          nextStage,
+          loaderText = "Loading next section..."
+        ) {
+          currentStage.classList.add("hidden");
+          document.getElementById("loader-text").innerText = loaderText;
+          loader.classList.remove("hidden");
+
+          setTimeout(() => {
+            loader.classList.add("hidden");
+            nextStage.classList.remove("hidden");
+            nextStage.classList.add("fade-in");
+          }, 750);
+        }
+
+        // Client Validation Subsystem
+        function validateStep(container) {
+          let isValid = true;
+
+          // Validate Text Fields (Skip optional ones)
+          const textElements = container.querySelectorAll(
+            'input[type="text"], textarea'
+          );
+          textElements.forEach((elem) => {
+            if (elem.id === "und-questions") return; // Bypass optional question textarea
+
+            if (!elem.value.trim()) {
+              elem.classList.add("input-error");
+              isValid = false;
+            } else {
+              elem.classList.remove("input-error");
+            }
+          });
+
+          // Validate Multiple Choice Card Matrices
+          const radioGroups = container.querySelectorAll(".mc-group");
+          radioGroups.forEach((group) => {
+            const checkBoxes = group.querySelectorAll('input[type="checkbox"]');
+            const radios = group.querySelectorAll('input[type="radio"]');
+            let groupSelected = false;
+
+            if (radios.length > 0) {
+              radios.forEach((r) => {
+                if (r.checked) groupSelected = true;
+              });
+            } else if (checkBoxes.length > 0) {
+              checkBoxes.forEach((c) => {
+                if (c.checked) groupSelected = true;
+              });
+            }
+
+            if (!groupSelected) {
+              group.classList.add("mc-group-error");
+              isValid = false;
+            } else {
+              group.classList.remove("mc-group-error");
+            }
+          });
+
+          return isValid;
+        }
+
+        // Realtime cleanup loops
+        document.querySelectorAll("input, textarea").forEach((item) => {
+          item.addEventListener("input", () => {
+            item.classList.remove("input-error");
+            const pGroup = item.closest(".mc-group");
+            if (pGroup) pGroup.classList.remove("mc-group-error");
+          });
+          item.addEventListener("change", () => {
+            const pGroup = item.closest(".mc-group");
+            if (pGroup) pGroup.classList.remove("mc-group-error");
+          });
+        });
+
+        // Action Stage Triggers
+        document
+          .getElementById("btn-begin-app")
+          .addEventListener("click", () => changeStage(welcomeView, step1View));
+        document
+          .querySelector(".btn-back-to-welcome")
+          .addEventListener("click", () => changeStage(step1View, welcomeView));
+
+        document
+          .getElementById("btn-to-step-2")
+          .addEventListener("click", () => {
+            if (!validateStep(step1View)) return;
+            changeStage(step1View, step2View);
+          });
+        document
+          .getElementById("btn-back-to-1")
+          .addEventListener("click", () => changeStage(step2View, step1View));
+
+        document
+          .getElementById("btn-to-step-3")
+          .addEventListener("click", () => {
+            if (!validateStep(step2View)) return;
+            changeStage(step2View, step3View);
+          });
+        document
+          .getElementById("btn-back-to-2")
+          .addEventListener("click", () => changeStage(step3View, step2View));
+
+        document
+          .getElementById("btn-to-step-4")
+          .addEventListener("click", () => {
+            if (!validateStep(step3View)) return;
+            changeStage(step3View, step4View);
+          });
+        document
+          .getElementById("btn-back-to-3")
+          .addEventListener("click", () => changeStage(step4View, step3View));
+
+        document
+          .getElementById("btn-to-step-5")
+          .addEventListener("click", () => {
+            if (!validateStep(step4View)) return;
+            changeStage(step4View, step5View);
+          });
+        document
+          .getElementById("btn-back-to-4")
+          .addEventListener("click", () => changeStage(step5View, step4View));
+
+        document
+          .getElementById("btn-to-step-6")
+          .addEventListener("click", () => {
+            if (!validateStep(step5View)) return;
+            changeStage(step5View, step6View);
+          });
+        document
+          .getElementById("btn-back-to-5")
+          .addEventListener("click", () => changeStage(step6View, step5View));
+
+        // Form Submit and Webhook Delivery
+        document
+          .getElementById("application-form")
+          .addEventListener("submit", async (e) => {
+            e.preventDefault();
+            if (!validateStep(step6View)) return;
+
+            const dUser = document.getElementById("discord-username").value;
+            const dID = document.getElementById("discord-id").value;
+            const rUser = document.getElementById("roblox-username").value;
+            const rID = document.getElementById("roblox-id").value;
+            const age = document.getElementById("app-age").value;
+            const tz = document.getElementById("app-timezone").value;
+
+            const whyJoin = document.getElementById("exp-reason").value;
+            const whyPick = document.getElementById("exp-comparison").value;
+            const activeVal = document.getElementById("activity-slider").value;
+
+            const frp = document.getElementById("know-frp").value;
+            const vdm = document.getElementById("know-vdm").value;
+            const rdm = document.getElementById("know-rdm").value;
+            const ltap = document.getElementById("know-ltap").value;
+            const rtap = document.getElementById("know-rtap").value;
+            const nlr = document.getElementById("know-nlr").value;
+
+            const sceneNoEv = document.getElementById("scen-no-evidence").value;
+            const sceneAbuse = document.getElementById("scen-abuse").value;
+            const sceneStack = document.getElementById("scen-stacking").value;
+            const sceneImp = document.getElementById("scen-impersonator").value;
+
+            const mcHmsg =
+              document.querySelector('input[name="mc-hmsg"]:checked')?.value ||
+              "Not Answered";
+            const mcPm =
+              document.querySelector('input[name="mc-pm-offduty"]:checked')
+                ?.value || "Not Answered";
+            const mcPlCount =
+              document.querySelector('input[name="mc-playercount"]:checked')
+                ?.value || "Not Answered";
+
+            const checkedCmds = [];
+            document
+              .querySelectorAll('input[name="mc-neveruse"]:checked')
+              .forEach((c) => checkedCmds.push(c.value));
+
+            const undDeny =
+              document.querySelector('input[name="und-deny"]:checked')?.value ||
+              "Not Answered";
+            const undAi =
+              document.querySelector('input[name="und-ai"]:checked')?.value ||
+              "Not Answered";
+            const questions =
+              document.getElementById("und-questions").value.trim() ||
+              "None Provided";
+
+            step6View.classList.add("hidden");
+            document.getElementById("loader-text").innerText =
+              "Transmitting comprehensive application log embeds...";
+            loader.classList.remove("hidden");
+
+            const webhookUrl =
+              "https://discord.com/api/webhooks/1510492197466673174/0VxXqOue7aZ3MSJHoTHHVn8DRNohUGdWdJ0K0L_PCUS2lrER7epKaDZqmvrcAOKwqlgG";
+
+            // Discord Application Payload with polished styling, bold fields, and code block formatting
+            const payload = {
+              content: `<@&1504259735120122027>\nNew Staff Application Log from <@${dID}> (${dUser})`,
+              embeds: [
+                {
+                  title: "🌴 Hawaii State RP - Step 1: Account Information",
+                  color: 34024,
+                  fields: [
+                    {
+                      name: "Discord Username",
+                      value: `<@${dID}>`,
+                      inline: true,
+                    },
+                    {
+                      name: "Discord ID",
+                      value: `\`\`\`${dID}\`\`\``,
+                      inline: true,
+                    },
+                    {
+                      name: "Roblox Username",
+                      value: `\`\`\`${rUser}\`\`\``,
+                      inline: true,
+                    },
+                    {
+                      name: "Roblox ID",
+                      value: `\`\`\`${rID}\`\`\``,
+                      inline: true,
+                    },
+                    { name: "Age", value: `\`\`\`${age}\`\`\``, inline: true },
+                    {
+                      name: "Time Zone",
+                      value: `\`\`\`${tz}\`\`\``,
+                      inline: true,
+                    },
+                  ],
+                },
+                {
+                  title: "📊 Step 2: Experience",
+                  color: 34024,
+                  fields: [
+                    {
+                      name: "**Why do you want to join our staff team?**",
+                      value: `\`\`\`${whyJoin}\`\`\``,
+                      inline: false,
+                    },
+                    {
+                      name: "**Why should we pick you over other applicants?**",
+                      value: `\`\`\`${whyPick}\`\`\``,
+                      inline: false,
+                    },
+                    {
+                      name: "**How active will you be in our server?**",
+                      value: `\`\`\`${activeVal} / 10\`\`\``,
+                      inline: false,
+                    },
+                  ],
+                },
+                {
+                  title: "📚 Step 3: Basic Knowledge",
+                  color: 34024,
+                  fields: [
+                    {
+                      name: "**What is FRP and how would you punish a player for it?**",
+                      value: `\`\`\`${frp}\`\`\``,
+                      inline: false,
+                    },
+                    {
+                      name: "**What is VDM and how would you punish a player for it?**",
+                      value: `\`\`\`${vdm}\`\`\``,
+                      inline: false,
+                    },
+                    {
+                      name: "**What is RDM and how would you punish a player for it?**",
+                      value: `\`\`\`${rdm}\`\`\``,
+                      inline: false,
+                    },
+                    {
+                      name: "**What is LTAP and how would you punish a player for it?**",
+                      value: `\`\`\`${ltap}\`\`\``,
+                      inline: false,
+                    },
+                    {
+                      name: "**What is RTAP and how would you punish a player for it?**",
+                      value: `\`\`\`${rtap}\`\`\``,
+                      inline: false,
+                    },
+                    {
+                      name: "**What is NLR and how would you punish a player for it?**",
+                      value: `\`\`\`${nlr}\`\`\``,
+                      inline: false,
+                    },
+                  ],
+                },
+                {
+                  title: "🎭 Step 4: Scenarios",
+                  color: 34024,
+                  fields: [
+                    {
+                      name: "**If someone calls mod without any evidence, how would you handle it?**",
+                      value: `\`\`\`${sceneNoEv}\`\`\``,
+                      inline: false,
+                    },
+                    {
+                      name: "**You witness another staff member abusing their powers. What would you do?**",
+                      value: `\`\`\`${sceneAbuse}\`\`\``,
+                      inline: false,
+                    },
+                    {
+                      name: "**Mod calls are stacking and you're the only one online, what would you do?**",
+                      value: `\`\`\`${sceneStack}\`\`\``,
+                      inline: false,
+                    },
+                    {
+                      name: "**You see a player impersonating staff, what would you do?**",
+                      value: `\`\`\`${sceneImp}\`\`\``,
+                      inline: false,
+                    },
+                  ],
+                },
+                {
+                  title: "📝 Step 5 & 6: Multiple Choice & Understanding",
+                  color: 34024,
+                  fields: [
+                    {
+                      name: '**Can moderators use custom ":h" messages?**',
+                      value: `\`\`\`${mcHmsg}\`\`\``,
+                      inline: true,
+                    },
+                    {
+                      name: '**Can you use ":pm" while off-duty as a moderator?**',
+                      value: `\`\`\`${mcPm}\`\`\``,
+                      inline: true,
+                    },
+                    {
+                      name: "**Can you get on shift while the player count is under 20 players?**",
+                      value: `\`\`\`${mcPlCount}\`\`\``,
+                      inline: true,
+                    },
+                    {
+                      name: "**What command(s) should you never use in game at all?**",
+                      value: `\`\`\`${
+                        checkedCmds.join(", ") || "None Selected"
+                      }\`\`\``,
+                      inline: false,
+                    },
+                    {
+                      name: "**Do you understand that you may be denied for any reason whatso ever?**",
+                      value: `\`\`\`${undDeny}\`\`\``,
+                      inline: true,
+                    },
+                    {
+                      name: "**Do you understand that the use of AI at all will result in immediate denial and permanent blacklist?**",
+                      value: `\`\`\`${undAi}\`\`\``,
+                      inline: true,
+                    },
+                    {
+                      name: "**Any questions?**",
+                      value: `\`\`\`${questions}\`\`\``,
+                      inline: false,
+                    },
+                  ],
+                  footer: { text: "Hawaii State RP Administration System" },
+                  timestamp: new Date().toISOString(),
+                },
+              ],
+            };
+
+            try {
+              const response = await fetch(webhookUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+              });
+
+              loader.classList.add("hidden");
+              if (response.ok) {
+                successView.classList.remove("hidden");
+                successView.classList.add("fade-in");
+              } else {
+                throw new Error(`Webhook fault status: ${response.status}`);
+              }
+            } catch (err) {
+              console.error("Delivery error logs:", err);
+              loader.classList.add("hidden");
+              step6View.classList.remove("hidden");
+              alert(
+                `Submission Failure: Could not broadcast to administration channels. Check network metrics.`
+              );
+            }
+          });
+      });
+    </script>
+  </body>
+</html>
