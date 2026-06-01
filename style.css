@@ -7,6 +7,8 @@
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --glass-border: rgba(255, 255, 255, 0.08);
+  --discord-blurple: #5865f2;
+  --discord-blurple-hover: #4752c4;
 }
 
 * {
@@ -120,7 +122,7 @@ body {
 }
 
 .nav-discord-btn {
-  background: #5865f2;
+  background: var(--discord-blurple);
   padding: 8px 18px;
   border-radius: 30px;
   display: flex;
@@ -132,7 +134,7 @@ body {
 }
 
 .nav-discord-btn:hover {
-  background: #4752c4 !important;
+  background: var(--discord-blurple-hover) !important;
   transform: translateY(-2px);
   color: white !important;
 }
@@ -215,15 +217,21 @@ body {
   transition: all 0.3s ease;
 }
 
+/* Updated premium Discord button style */
 .btn-primary {
-  background: var(--primary-blue);
-  color: #000;
-  box-shadow: 0 5px 20px rgba(0, 162, 255, 0.3);
+  background: var(--discord-blurple);
+  color: #ffffff;
+  box-shadow: 0 5px 20px rgba(88, 101, 242, 0.25);
+}
+
+.btn-primary i {
+  color: #ffffff; /* Forces Discord icon to stay clean white */
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 162, 255, 0.5);
+  background: var(--discord-blurple-hover);
+  box-shadow: 0 8px 25px rgba(88, 101, 242, 0.45);
 }
 
 .btn-secondary {
@@ -365,7 +373,7 @@ body {
 /* --- Quick Actions Section --- */
 .quick-actions {
   max-width: 1200px;
-  margin: 80px auto;
+  margin: 80px auto 40px auto;
   padding: 0 25px;
 }
 
@@ -391,27 +399,35 @@ body {
 }
 
 .action-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
   background: var(--card-bg);
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
   padding: 35px 30px;
-  backdrop-filter: blur(10px);
-  transition: transform 0.3s, border 0.3s;
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
+/* --- Card Hover Animation --- */
 .action-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(0, 162, 255, 0.4);
+  border-color: rgba(0, 162, 255, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 162, 255, 0.15);
 }
 
 .card-icon {
   font-size: 2rem;
   color: var(--primary-blue);
   margin-bottom: 20px;
+  display: inline-block;
 }
 
 .action-card h3 {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
+  font-weight: 700;
   margin-bottom: 15px;
 }
 
@@ -419,7 +435,8 @@ body {
   color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1.6;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
+  flex-grow: 1;
 }
 
 .card-link {
@@ -431,12 +448,70 @@ body {
   align-items: center;
   gap: 8px;
   transition: gap 0.2s;
+  margin-top: auto;
 }
 
 .card-link:hover {
   gap: 12px;
 }
 
+/* --- Footer --- */
+footer {
+  text-align: center;
+  padding: 40px 25px;
+  border-top: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* --- Mobile Responsiveness --- */
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 75px;
+    right: -100%;
+    flex-direction: column;
+    background: rgba(11, 15, 25, 0.95);
+    backdrop-filter: blur(16px);
+    width: 100%;
+    height: calc(100vh - 75px);
+    padding: 40px;
+    gap: 25px;
+    transition: right 0.4s ease;
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding-top: 140px;
+  }
+
+  .hero p {
+    margin: 0 auto 35px auto;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .server-stats {
+    justify-content: center;
+  }
+
+  .floating-logo {
+    width: 240px;
+    height: 240px;
+  }
+}
 /* --- Footer --- */
 footer {
   text-align: center;
