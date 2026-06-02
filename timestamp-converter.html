@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timestamp Converter | Hawaii State Roleplay</title>
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://raw.githubusercontent.com/HawaiiStateRoleplay/hawaiistateroleplay.github.io/refs/heads/main/favicon.ico"
+    />
+
+    <link rel="stylesheet" href="timestamp.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="animated-bg"></div>
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="/index.html" class="logo-area-link">
+          <div class="logo-area">
+            <img
+              src="https://www.image2url.com/r2/default/images/1780193311385-e0aa4b69-41cf-460f-bb58-9f60ad97b61d.png"
+              alt="Hawaii State Roleplay Logo"
+              class="server-icon"
+            />
+            <span class="brand-name"
+              >Hawaii State <span class="highlight">RP</span></span
+            >
+          </div>
+        </a>
+        <ul class="nav-links">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/server-rules.html">Server Rules</a></li>
+          <li><a href="/information.html">Information</a></li>
+          <li><a href="/tools.html" class="active">Tools</a></li>
+          <li>
+            <a
+              href="https://discord.gg/xZEXJYRSRx"
+              target="_blank"
+              class="nav-discord-btn"
+              ><i class="fab fa-discord"></i> Discord</a
+            >
+          </li>
+        </ul>
+        <div class="menu-toggle" id="mobile-menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <section class="converter-section">
+      <a href="/tools.html" class="back-tools-btn">
+        <i class="fas fa-arrow-left"></i> Back to Tools
+      </a>
+
+      <div class="tool-container">
+        <div class="tool-header">
+          <div class="badge">Utility Tool</div>
+          <h2>Discord Timestamp Converter</h2>
+          <p>
+            Create markdown text that dynamically shifts to match each user's
+            local timezone inside Discord. Pick your parameters below, then
+            click to copy.
+          </p>
+        </div>
+
+        <div class="input-panel">
+          <div class="input-group">
+            <label for="date-input"
+              ><i class="fas fa-calendar-alt"></i> Select Date</label
+            >
+            <input type="date" id="date-input" />
+          </div>
+          <div class="input-group">
+            <label for="time-input"
+              ><i class="fas fa-clock"></i> Select Time</label
+            >
+            <input type="time" id="time-input" />
+          </div>
+        </div>
+
+        <div class="results-panel" id="results-panel">
+          <div class="results-heading">
+            <h3>Generated Formats</h3>
+            <span class="hint-text"
+              >Click any row or copy button to copy markdown syntax</span
+            >
+          </div>
+
+          <div class="results-grid" id="formats-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2026 Hawaii State Roleplay.</p>
+    </footer>
+
+    <script src="timestamp.js"></script>
+  </body>
+</html>
