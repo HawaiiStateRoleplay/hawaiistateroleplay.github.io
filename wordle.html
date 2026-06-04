@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wordle | Hawaii State Roleplay</title>
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://raw.githubusercontent.com/HawaiiStateRoleplay/hawaiistateroleplay.github.io/refs/heads/main/favicon.ico"
+    />
+
+    <link rel="stylesheet" href="wordle.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="discordOverlay" class="discord-overlay" style="display: none">
+      <div id="discordCard" class="discord-card">
+        <div id="discordPromptScreen">
+          <div class="discord-card-icon"><i class="fab fa-discord"></i></div>
+          <h3>Link Discord Profile</h3>
+          <p>
+            Please provide your Discord User ID to save your progression stats
+            across sessions.
+          </p>
+
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="discordIdInput"
+              placeholder="e.g. 43928172938472910"
+              maxlength="25"
+            />
+          </div>
+
+          <div class="discord-card-actions">
+            <button id="discordSkipBtn" class="discord-btn-skip">Skip</button>
+            <button id="discordContinueBtn" class="discord-btn-continue">
+              Continue <span class="arrow-span">&#10141;</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="discordStatusScreen" style="display: none">
+          <div class="status-box">
+            <div
+              id="statusIndicator"
+              class="status-circle status-loading"
+            ></div>
+            <p id="statusText">Verifying Profile Account...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="animated-bg"></div>
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="/index.html" class="logo-area-link">
+          <div class="logo-area">
+            <img
+              src="https://www.image2url.com/r2/default/images/1780193311385-e0aa4b69-41cf-460f-bb58-9f60ad97b61d.png"
+              alt="Hawaii State Roleplay Logo"
+              class="server-icon"
+            />
+            <span class="brand-name"
+              >Hawaii State <span class="highlight">RP</span></span
+            >
+          </div>
+        </a>
+        <ul class="nav-links">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/server-rules.html">Server Rules</a></li>
+          <li><a href="/information.html">Information</a></li>
+          <li><a href="/tools.html" class="active">Tools</a></li>
+          <li>
+            <a
+              href="https://discord.gg/xZEXJYRSRx"
+              target="_blank"
+              class="nav-discord-btn"
+              ><i class="fab fa-discord"></i> Discord</a
+            >
+          </li>
+        </ul>
+        <div class="menu-toggle" id="mobile-menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <main class="wordle-container fade-in-up">
+      <div class="wordle-header">
+        <div class="badge">Mini-Game</div>
+        <h2>Daily Wordle Challenge</h2>
+        <p>Guess the hidden 5-letter community word in 6 attempts.</p>
+      </div>
+
+      <div id="toast-container" class="toast-container"></div>
+
+      <div class="game-wrapper" id="gameWrapper">
+        <div class="wordle-grid" id="wordleGrid"></div>
+        <div class="keyboard" id="keyboard"></div>
+      </div>
+
+      <div class="lockout-overlay" id="lockoutOverlay">
+        <div class="lock-card">
+          <div class="lock-icon">&#x1F512;</div>
+          <h3>Challenge Locked</h3>
+          <p id="lockoutStatusMsg">You have completed today's daily puzzle!</p>
+          <div class="countdown-label">Unlocks in:</div>
+          <div class="countdown-timer" id="countdownTimer">24:59:59</div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Hawaii State Roleplay.</p>
+    </footer>
+
+    <script src="wordle.js"></script>
+  </body>
+</html>
