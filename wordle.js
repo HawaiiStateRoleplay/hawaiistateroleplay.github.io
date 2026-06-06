@@ -14,20 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const TARGET_CHANNEL_ID = "1511923669721546762";
 
   // --- Dynamic Word Lists ---
-  let WORD_POOL = [
-    "ABOUT", "ABOVE", "AFTER", "AGAIN", "ALERT", "ALIVE", "ALLOW", "ALONG", "ALTER", "ANGRY",
-    "APPLE", "BEACH", "BEGIN", "BLACK", "BLIND", "BRAVE", "BREAD", "BRING", "BROWN", "BUILD",
-    "CABLE", "CARRY", "CATCH", "CAUSE", "CHAIR", "CHIEF", "CHILD", "CLEAR", "CLOCK", "CLOSE",
-    "COACH", "COUNT", "COURT", "COVER", "CREAM", "CRIME", "CROSS", "CROWD", "DANCE", "DIRTY",
-    "DREAM", "DRIVE", "EARTH", "EMPTY", "ENEMY", "ENJOY", "ENTER", "EVENT", "EVERY", "FAINT",
-    "FAITH", "FIELD", "FIGHT", "FIRST", "FLIGHT", "FOCUS", "FORCE", "FRAME", "FRESH", "FRONT",
-    "FRUIT", "GIANT", "GLASS", "GLOBE", "GRAND", "GRASS", "GREEN", "GROUP", "GROWN", "GUARD",
-    "HAPPY", "HEART", "HEAVY", "HOUSE", "IMAGE", "INDEX", "INPUT", "JUDGE", "KNIFE", "LIGHT",
-    "LUNCH", "MAJOR", "MARCH", "MATCH", "METAL", "MODEL", "MONEY", "MONTH", "MOTOR", "MOUTH",
-    "MUSIC", "NIGHT", "NOISE", "NORTH", "OCEAN", "OFFER", "ORDER", "OTHER", "OWNER", "PANEL",
-    "PAPER", "PARTY", "PEACE", "PHASE", "PHONE", "PHOTO", "PIECE", "PILOT", "PITCH", "PLACE"
-  ];
-  let VALID_DICTIONARY = [...WORD_POOL];
+  let WORD_POOL = [];
+  let VALID_DICTIONARY = [];
   let TARGET_WORD = "";
 
   let currentRow = 0;
@@ -68,25 +56,26 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Main Initialization Flow ---
   async function initGame() {
     try {
-      try {
-        const response = await fetch("wordlist.txt");
-        if (response.ok) {
-          const rawText = await response.text();
-          const words = rawText
-            .split(/\r?\n/)
-            .map((word) => word.trim().toUpperCase())
-            .filter((word) => word.length > 0);
-          
-          if (words.length > 0) {
-            WORD_POOL = words;
-            VALID_DICTIONARY = words;
-          }
-        }
-      } catch (e) {
-        console.log("Using local common word fallback pool.");
+      const response = await fetch("wordlist.txt");
+      if (!response.ok) {
+        throw new Error(`Failed to load word list: ${response.statusText}`);
+      }
+      const rawText = await response.text();
+
+      const words = rawText
+        .split(/\r?\n/)
+        .map((word) => word.trim().toUpperCase())
+        .filter((word) => word.length > 0);
+
+      if (words.length === 0) {
+        throw new Error("The wordlist.txt file is empty.");
       }
 
-      // Generate or retrieve the session target word
+      VALID_DICTIONARY = words;
+      
+      // Filter out 'WAREZ' from the choices available for the target daily word
+      WORD_POOL = words.filter((word) => word !== "WAREZ");
+
       TARGET_WORD = getSessionWord();
 
       buildGrid();
@@ -102,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Picks a truly random word and locks it to the browser tab session instance
   function getSessionWord() {
     let sessionWord = sessionStorage.getItem("currentWordleTarget");
     if (!sessionWord || !WORD_POOL.includes(sessionWord)) {
@@ -493,5 +481,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initGame();
 });
-
-
