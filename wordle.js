@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const TARGET_CHANNEL_ID = "1511923669721546762";
 
   // --- Dynamic Word Lists ---
-  // A curated list of common, everyday 5-letter words
   let WORD_POOL = [
     "ABOUT", "ABOVE", "AFTER", "AGAIN", "ALERT", "ALIVE", "ALLOW", "ALONG", "ALTER", "ANGRY",
     "APPLE", "BEACH", "BEGIN", "BLACK", "BLIND", "BRAVE", "BREAD", "BRING", "BROWN", "BUILD",
@@ -69,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Main Initialization Flow ---
   async function initGame() {
     try {
-      // Attempt to load external file if desired, otherwise defaults to local WORD_POOL
       try {
         const response = await fetch("wordlist.txt");
         if (response.ok) {
@@ -88,7 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Using local common word fallback pool.");
       }
 
-      TARGET_WORD = getDailyWord();
+      // Generate or retrieve the session target word
+      TARGET_WORD = getSessionWord();
 
       buildGrid();
       buildKeyboard();
@@ -103,10 +102,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function getDailyWord() {
-    const dayTimestamp = Math.floor(Date.now() / 86400000);
-    const index = dayTimestamp % WORD_POOL.length;
-    return WORD_POOL[index];
+  // Picks a truly random word and locks it to the browser tab session instance
+  function getSessionWord() {
+    let sessionWord = sessionStorage.getItem("currentWordleTarget");
+    if (!sessionWord || !WORD_POOL.includes(sessionWord)) {
+      const index = Math.floor(Math.random() * WORD_POOL.length);
+      sessionWord = WORD_POOL[index];
+      sessionStorage.setItem("currentWordleTarget", sessionWord);
+    }
+    return sessionWord;
   }
 
   function buildGrid() {
