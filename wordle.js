@@ -9,14 +9,26 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- Configuration Channels & Webhooks ---
-  // Place your genuine Discord Webhook production URL endpoint variable here
   const DISCORD_WEBHOOK_URL =
     "https://discord.com/api/webhooks/1511925348378345502/LPi0UDaqq4phhMqjp-Pyyo4FF8M2c9njAQlPXzWtlnDBYAtk4MRu3fLtcLBL9d2ugiRJ";
   const TARGET_CHANNEL_ID = "1511923669721546762";
 
   // --- Dynamic Word Lists ---
-  let WORD_POOL = [];
-  let VALID_DICTIONARY = [];
+  // A curated list of common, everyday 5-letter words
+  let WORD_POOL = [
+    "ABOUT", "ABOVE", "AFTER", "AGAIN", "ALERT", "ALIVE", "ALLOW", "ALONG", "ALTER", "ANGRY",
+    "APPLE", "BEACH", "BEGIN", "BLACK", "BLIND", "BRAVE", "BREAD", "BRING", "BROWN", "BUILD",
+    "CABLE", "CARRY", "CATCH", "CAUSE", "CHAIR", "CHIEF", "CHILD", "CLEAR", "CLOCK", "CLOSE",
+    "COACH", "COUNT", "COURT", "COVER", "CREAM", "CRIME", "CROSS", "CROWD", "DANCE", "DIRTY",
+    "DREAM", "DRIVE", "EARTH", "EMPTY", "ENEMY", "ENJOY", "ENTER", "EVENT", "EVERY", "FAINT",
+    "FAITH", "FIELD", "FIGHT", "FIRST", "FLIGHT", "FOCUS", "FORCE", "FRAME", "FRESH", "FRONT",
+    "FRUIT", "GIANT", "GLASS", "GLOBE", "GRAND", "GRASS", "GREEN", "GROUP", "GROWN", "GUARD",
+    "HAPPY", "HEART", "HEAVY", "HOUSE", "IMAGE", "INDEX", "INPUT", "JUDGE", "KNIFE", "LIGHT",
+    "LUNCH", "MAJOR", "MARCH", "MATCH", "METAL", "MODEL", "MONEY", "MONTH", "MOTOR", "MOUTH",
+    "MUSIC", "NIGHT", "NOISE", "NORTH", "OCEAN", "OFFER", "ORDER", "OTHER", "OWNER", "PANEL",
+    "PAPER", "PARTY", "PEACE", "PHASE", "PHONE", "PHOTO", "PIECE", "PILOT", "PITCH", "PLACE"
+  ];
+  let VALID_DICTIONARY = [...WORD_POOL];
   let TARGET_WORD = "";
 
   let currentRow = 0;
@@ -33,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ["", "", "", "", ""],
   ];
 
-  // Keep a cumulative record of rows in emoji blocks format
   const emojiHistoryMatrix = [];
 
   // --- DOM Component Initialization ---
@@ -58,39 +69,32 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Main Initialization Flow ---
   async function initGame() {
     try {
-      // 1. Fetch and process the text file
-      const response = await fetch("wordlist.txt");
-      if (!response.ok) {
-        throw new Error(`Failed to load word list: ${response.statusText}`);
+      // Attempt to load external file if desired, otherwise defaults to local WORD_POOL
+      try {
+        const response = await fetch("wordlist.txt");
+        if (response.ok) {
+          const rawText = await response.text();
+          const words = rawText
+            .split(/\r?\n/)
+            .map((word) => word.trim().toUpperCase())
+            .filter((word) => word.length > 0);
+          
+          if (words.length > 0) {
+            WORD_POOL = words;
+            VALID_DICTIONARY = words;
+          }
+        }
+      } catch (e) {
+        console.log("Using local common word fallback pool.");
       }
-      const rawText = await response.text();
 
-      // 2. Parse words, filter out empty rows, and force uppercase
-      const words = rawText
-        .split(/\r?\n/)
-        .map((word) => word.trim().toUpperCase())
-        .filter((word) => word.length > 0);
-
-      if (words.length === 0) {
-        throw new Error("The wordlist.txt file is empty.");
-      }
-
-      // 3. Assign pools
-      WORD_POOL = words;
-      VALID_DICTIONARY = words;
-
-      // 4. Determine target word
       TARGET_WORD = getDailyWord();
 
-      // 5. Build UI components now that lists are safely loaded
       buildGrid();
       buildKeyboard();
 
-      // 6. Check persistent lockout first. If locked, skip asking for ID
       const isCurrentlyLocked = checkPersistentLockout();
-
       if (!isCurrentlyLocked) {
-        // Only show prompt if player is not currently restricted by cooldown timer
         setupDiscordPrompt();
       }
     } catch (error) {
@@ -105,7 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return WORD_POOL[index];
   }
 
-  // Generate game tiles dynamically
   function buildGrid() {
     gridContainer.innerHTML = "";
     for (let r = 0; r < 6; r++) {
@@ -122,7 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Generate keyboard rows layout
   function buildKeyboard() {
     keyboardContainer.innerHTML = "";
     const keyboardRows = [
@@ -147,26 +149,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- Discord Prompt Handling System ---
   function setupDiscordPrompt() {
-    // Clear out old values from previous cooldowns to ensure fresh typing if prompted
     discordIdInput.value = "";
-
-    // Reveal prompt modal structure
     discordOverlay.style.display = "flex";
 
-    // Recover cached ID configuration parameters (if any survived)
     const cachedDiscordId = localStorage.getItem("hserp_discord_id");
     if (cachedDiscordId) {
       discordIdInput.value = cachedDiscordId;
     }
 
-    // Skip Button Handler Context
     discordSkipBtn.addEventListener("click", () => {
       dismissDiscordModal();
     });
 
-    // Continue Sync Execution Handler
     discordContinueBtn.addEventListener("click", async () => {
       const discordIdValue = discordIdInput.value.trim();
 
@@ -180,11 +175,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Assign to runtime scope variable
       ACTIVE_USER_DISCORD_ID = discordIdValue;
       localStorage.setItem("hserp_discord_id", discordIdValue);
 
-      // Switch views to status overlay screen layout
       discordPromptScreen.style.display = "none";
       discordStatusScreen.style.display = "block";
 
@@ -208,11 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function fireInitializationWebhook(userId) {
-    if (
-      !DISCORD_WEBHOOK_URL ||
-      DISCORD_WEBHOOK_URL.includes("YOUR_DISCORD_WEBHOOK")
-    ) {
-      return true; // Local dev simulation bypass
+    if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL.includes("YOUR_DISCORD_WEBHOOK")) {
+      return true;
     }
 
     const payload = {
@@ -222,16 +212,8 @@ document.addEventListener("DOMContentLoaded", () => {
           description: `A user has joined the match matrix for today's puzzle event loop.`,
           color: 0x5865f2,
           fields: [
-            {
-              name: "Discord User ID",
-              value: `<@${userId}> (\`${userId}\`)`,
-              inline: true,
-            },
-            {
-              name: "Channel Destination ID",
-              value: `\`${TARGET_CHANNEL_ID}\``,
-              inline: true,
-            },
+            { name: "Discord User ID", value: `<@${userId}> (\`${userId}\`)`, inline: true },
+            { name: "Channel Destination ID", value: `\`${TARGET_CHANNEL_ID}\``, inline: true },
           ],
           timestamp: new Date().toISOString(),
         },
@@ -251,40 +233,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // --- Real-time Guess Webhook Synchronization Engine ---
   async function fireGuessWebhook(currentEmojis) {
-    if (
-      !DISCORD_WEBHOOK_URL ||
-      DISCORD_WEBHOOK_URL.includes("YOUR_DISCORD_WEBHOOK")
-    ) {
+    if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL.includes("YOUR_DISCORD_WEBHOOK")) {
       return;
     }
 
-    // Format all previous tries alongside current row submission array block configurations
     const boardStateGridString = emojiHistoryMatrix.join("\n");
-
     const payload = {
       embeds: [
         {
           title: `🟩 Wordle Turn Submission — Attempt ${currentRow + 1}/6`,
           description: `Progress matrices submitted by profile: <@${ACTIVE_USER_DISCORD_ID}>`,
-          color: currentEmojis === "🟩🟩🟩🟩🟩" ? 0x10b981 : 0xf59e0b, // Green if matched, yellow-orange alternative if hunting
+          color: currentEmojis === "🟩🟩🟩🟩🟩" ? 0x10b981 : 0xf59e0b,
           fields: [
-            {
-              name: "User Identification Parameters",
-              value: `\`${ACTIVE_USER_DISCORD_ID}\``,
-              inline: true,
-            },
+            { name: "User Identification Parameters", value: `\`${ACTIVE_USER_DISCORD_ID}\``, inline: true },
             { name: "Latest Line State", value: currentEmojis, inline: true },
-            {
-              name: "Cumulative Match Grid View",
-              value: `\`\`\`\n${boardStateGridString}\n\`\`\``,
-              inline: false,
-            },
+            { name: "Cumulative Match Grid View", value: `\`\`\`\n${boardStateGridString}\n\`\`\``, inline: false },
           ],
-          footer: {
-            text: `Channel Map Destination: ${TARGET_CHANNEL_ID}`,
-          },
+          footer: { text: `Channel Map Destination: ${TARGET_CHANNEL_ID}` },
           timestamp: new Date().toISOString(),
         },
       ],
@@ -301,13 +267,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Clear modal tracking classes
   function dismissDiscordModal() {
     discordOverlay.style.opacity = "0";
     discordCard.style.transform = "scale(0.9) translateY(-20px)";
     setTimeout(() => {
       discordOverlay.style.display = "none";
-      // Ensure screens default to entry layout positions for subsequent cycles
       discordPromptScreen.style.display = "block";
       discordStatusScreen.style.display = "none";
       statusIndicator.className = "status-circle status-loading";
@@ -315,7 +279,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 500);
   }
 
-  // --- Input Management Mechanics ---
   function handleInput(key) {
     if (isGameOver || !TARGET_WORD) return;
 
@@ -364,7 +327,6 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => toast.remove(), 2500);
   }
 
-  // --- Word Checking Engine & Animations ---
   function submitGuess() {
     if (currentTile < 5) {
       showToast("Not enough letters");
@@ -374,7 +336,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentGuess = guessMatrix[currentRow].join("");
     const currentRowElement = document.getElementById(`row-${currentRow}`);
 
-    // Dictionary Verification Validation Check
     if (!VALID_DICTIONARY.includes(currentGuess)) {
       showToast("Not in word list");
       currentRowElement.classList.add("shake");
@@ -382,7 +343,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Letter counter logic maps for tracking positional instances accurately
     const letterCounts = {};
     for (let i = 0; i < TARGET_WORD.length; i++) {
       letterCounts[TARGET_WORD[i]] = (letterCounts[TARGET_WORD[i]] || 0) + 1;
@@ -396,7 +356,6 @@ document.addEventListener("DOMContentLoaded", () => {
       rowTiles.push(document.getElementById(`tile-${currentRow}-${i}`));
     }
 
-    // Pass 1: Mark exact matching green tiles & assign emojis
     for (let i = 0; i < 5; i++) {
       if (currentGuess[i] === TARGET_WORD[i]) {
         finalStates[i] = "correct";
@@ -405,15 +364,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // Pass 2: Mark yellow present / gray absent tiles & assign emojis
     for (let i = 0; i < 5; i++) {
       if (finalStates[i] === "correct") continue;
 
       const guessedLetter = currentGuess[i];
-      if (
-        TARGET_WORD.includes(guessedLetter) &&
-        letterCounts[guessedLetter] > 0
-      ) {
+      if (TARGET_WORD.includes(guessedLetter) && letterCounts[guessedLetter] > 0) {
         finalStates[i] = "present";
         roundEmojiRowArray[i] = "🟨";
         letterCounts[guessedLetter]--;
@@ -423,19 +378,14 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // Flatten calculated emoji array line state into standard string block formats
     const computedEmojiString = roundEmojiRowArray.join("");
     emojiHistoryMatrix.push(computedEmojiString);
 
-    // Fire asynchronous background webhook message push without blocking display rendering timelines
     fireGuessWebhook(computedEmojiString);
 
-    // Apply flip animation sequentially across tiles
     rowTiles.forEach((tile, index) => {
       setTimeout(() => {
         tile.classList.add("flip");
-
-        // Change colors mid-flip transformation state
         setTimeout(() => {
           tile.setAttribute("data-state", finalStates[index]);
           updateKeyboardKey(currentGuess[index], finalStates[index]);
@@ -443,7 +393,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }, index * 150);
     });
 
-    // Game Resolution Handler Sequence
     setTimeout(() => {
       if (currentGuess === TARGET_WORD) {
         showToast("Excellent! Word found.");
@@ -468,14 +417,12 @@ document.addEventListener("DOMContentLoaded", () => {
     keyButton.setAttribute("data-state", state);
   }
 
-  // --- Countdown Timer & Persistent Lockout Mechanisms ---
   function triggerLockout(isVictory) {
     isGameOver = true;
     lockStatusMsg.innerText = isVictory
       ? `Phenomenal job! You successfully uncovered the word: ${TARGET_WORD}.`
       : `Nice try! The correct word today was: ${TARGET_WORD}.`;
 
-    // Exact 24-hour lockout setup (24 hours * 60 mins * 60 secs * 1000 ms)
     const twentyFourHoursInMs = 24 * 60 * 60 * 1000;
     const lockEndTimeStamp = Date.now() + twentyFourHoursInMs;
 
@@ -498,16 +445,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (distance <= 0) {
         clearInterval(timerInterval);
-
-        // Wipe out the countdown locks and remove the cached Discord user ID
         localStorage.removeItem("wordleLockEndTime");
         localStorage.removeItem("wordleLockMessage");
-        localStorage.removeItem("hserp_discord_id"); // Forces re-prompting on refresh
+        localStorage.removeItem("hserp_discord_id");
 
         gameWrapper.classList.remove("blurred");
         lockoutOverlay.style.display = "none";
-
-        // Reload to refresh game state, fetch a new word, and trigger identification
         window.location.reload();
         return;
       }
@@ -516,16 +459,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      timerElement.innerText = `${String(hours).padStart(2, "0")}:${String(
-        minutes
-      ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+      timerElement.innerText = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
     }
 
     updateClock();
     const timerInterval = setInterval(updateClock, 1000);
   }
 
-  // --- Initial Lockout Verification State Check ---
   function checkPersistentLockout() {
     const storedLockTime = localStorage.getItem("wordleLockEndTime");
     const storedMessage = localStorage.getItem("wordleLockMessage");
@@ -539,7 +479,6 @@ document.addEventListener("DOMContentLoaded", () => {
         startCountdown(endTimeParsed);
         return true;
       } else {
-        // Clean up data if time expired while the player was away from the page
         localStorage.removeItem("wordleLockEndTime");
         localStorage.removeItem("wordleLockMessage");
         localStorage.removeItem("hserp_discord_id");
@@ -548,6 +487,5 @@ document.addEventListener("DOMContentLoaded", () => {
     return false;
   }
 
-  // Run everything
   initGame();
 });
