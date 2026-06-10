@@ -15,10 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Dynamic Word Lists ---
   const HAWAII_WORD_POOL = [
-    "TREES", "OCEAN", "BEACH", "PALMS", "WAVES", 
-    "COCON", "ALOHA", "COAST", "REEFS", "SHORE", 
-    "SANDY", "SHELL", "SHARK", "WHALE", "FRUIT", 
-    "MANGO", "WATER", "SOLAR", "SUNNY", "TIKTI"
+    "TREES", "OCEAN", "BEACH", "PALMS", "WAVES", "ALOHA", "COAST", "REEFS", "SHORE", "SANDY", "SHELL", "SHARK", "WHALE", "FRUIT", "MANGO", "WATER", "BALLS", "SUNNY", "GRAPE", "HELLO"
   ];
 
   let VALID_DICTIONARY = [];
