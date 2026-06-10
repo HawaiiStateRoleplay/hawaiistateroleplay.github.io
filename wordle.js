@@ -14,7 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const TARGET_CHANNEL_ID = "1511923669721546762";
 
   // --- Dynamic Word Lists ---
-  let WORD_POOL = [];
+  const HAWAII_WORD_POOL = [
+    "TREES", "OCEAN", "BEACH", "PALMS", "WAVES", 
+    "COCON", "ALOHA", "COAST", "REEFS", "SHORE", 
+    "SANDY", "SHELL", "SHARK", "WHALE", "FRUIT", 
+    "MANGO", "WATER", "SOLAR", "SUNNY", "TIKTI"
+  ];
+
   let VALID_DICTIONARY = [];
   let TARGET_WORD = "";
 
@@ -72,10 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       VALID_DICTIONARY = words;
-      
-      // Filter out 'WAREZ' from the choices available for the target daily word
-      WORD_POOL = words.filter((word) => word !== "WAREZ");
-
       TARGET_WORD = getSessionWord();
 
       buildGrid();
@@ -93,9 +95,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function getSessionWord() {
     let sessionWord = sessionStorage.getItem("currentWordleTarget");
-    if (!sessionWord || !WORD_POOL.includes(sessionWord)) {
-      const index = Math.floor(Math.random() * WORD_POOL.length);
-      sessionWord = WORD_POOL[index];
+    if (!sessionWord || !HAWAII_WORD_POOL.includes(sessionWord)) {
+      const index = Math.floor(Math.random() * HAWAII_WORD_POOL.length);
+      sessionWord = HAWAII_WORD_POOL[index];
       sessionStorage.setItem("currentWordleTarget", sessionWord);
     }
     return sessionWord;
@@ -309,16 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function showToast(message) {
-    const container = document.getElementById("toast-container");
-    if (!container) return;
-    const toast = document.createElement("div");
-    toast.className = "toast";
-    toast.innerText = message;
-    container.appendChild(toast);
-    setTimeout(() => toast.remove(), 2500);
-  }
-
+  // --- Evaluation Logic ---
   function submitGuess() {
     if (currentTile < 5) {
       showToast("Not enough letters");
@@ -409,14 +402,25 @@ document.addEventListener("DOMContentLoaded", () => {
     keyButton.setAttribute("data-state", state);
   }
 
+  function showToast(message) {
+    const container = document.getElementById("toast-container");
+    if (!container) return;
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.innerText = message;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
+  }
+
+  // RILEY: Cooldown is back, but configured to exactly 3 hours!
   function triggerLockout(isVictory) {
     isGameOver = true;
     lockStatusMsg.innerText = isVictory
       ? `Phenomenal job! You successfully uncovered the word: ${TARGET_WORD}.`
       : `Nice try! The correct word today was: ${TARGET_WORD}.`;
 
-    const twentyFourHoursInMs = 24 * 60 * 60 * 1000;
-    const lockEndTimeStamp = Date.now() + twentyFourHoursInMs;
+    const threeHoursInMs = 3 * 60 * 60 * 1000; 
+    const lockEndTimeStamp = Date.now() + threeHoursInMs;
 
     localStorage.setItem("wordleLockEndTime", lockEndTimeStamp.toString());
     localStorage.setItem("wordleLockMessage", lockStatusMsg.innerText);
